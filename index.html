@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="https://cataas.com/cat" type="image/x-icon">
+    <title>RandomKIT</title>
+    <!-- If you want to contact author - 'https://t.me/QulmurodovSh' -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 600px;
+        }
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        #loading {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+            display: none; /* Скрыт по умолчанию */
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span style="color: orange; font-family: sans-serif;"><b>RandomKIT</b></span> APP</h1>
+        <div id="imageContainer">
+            <!-- Image will be displayed here -->
+        </div>
+        <button id="fetchCat"><b>Get a cat</b></button>
+        <button id="fetchCatGif"><b>Get a cat (GIF)</b></button>
+        <p id="loading">Загрузка...</p>
+    </div>
+
+    <script>
+        document.getElementById('fetchCat').addEventListener('click', async () => {
+            const imageContainer = document.getElementById('imageContainer');
+            const loadingText = document.getElementById('loading');
+
+            // Показать текст загрузки
+            loadingText.style.display = 'block';
+
+            try {
+                const response = await fetch('https://cataas.com/cat');
+                if (response.ok) {
+                    // Очистить старое изображение
+                    imageContainer.innerHTML = '';
+
+                    // Создать новое изображение
+                    const img = document.createElement('img');
+                    img.src = response.url;
+                    img.alt = 'A random cat image';
+                    img.width = 285
+
+                    // Скрыть текст загрузки, когда изображение загрузится
+                    img.onload = () => {
+                        loadingText.style.display = 'none';
+                    };
+
+                    imageContainer.appendChild(img);
+                } else {
+                    loadingText.style.display = 'none';
+                    imageContainer.innerHTML = 'Не удалось загрузить изображение.';
+                }
+            } catch (error) {
+                loadingText.style.display = 'none';
+                imageContainer.innerHTML = 'Произошла ошибка.';
+                console.error(error);
+            }
+        });
+
+        document.getElementById('fetchCatGif').addEventListener('click', async () => {
+            const imageContainer = document.getElementById('imageContainer');
+            const loadingText = document.getElementById('loading');
+
+            // Показать текст загрузки
+            loadingText.style.display = 'block';
+
+            try {
+                const response = await fetch('https://cataas.com/cat/gif');
+                if (response.ok) {
+                    // Очистить старое изображение
+                    imageContainer.innerHTML = '';
+
+                    // Создать новое изображение
+                    const img = document.createElement('img');
+                    img.src = response.url;
+                    img.alt = 'A random cat image';
+                    img.width = 285
+
+                    // Скрыть текст загрузки, когда изображение загрузится
+                    img.onload = () => {
+                        loadingText.style.display = 'none';
+                    };
+
+                    imageContainer.appendChild(img);
+                } else {
+                    loadingText.style.display = 'none';
+                    imageContainer.innerHTML = 'Не удалось загрузить изображение.';
+                }
+            } catch (error) {
+                loadingText.style.display = 'none';
+                imageContainer.innerHTML = 'Произошла ошибка.';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
